@@ -13,6 +13,7 @@ import br.com.paulofranca.cursomc.model.Cidade;
 import br.com.paulofranca.cursomc.model.Cliente;
 import br.com.paulofranca.cursomc.model.Endereco;
 import br.com.paulofranca.cursomc.model.Estado;
+import br.com.paulofranca.cursomc.model.ItemPedido;
 import br.com.paulofranca.cursomc.model.Pagamento;
 import br.com.paulofranca.cursomc.model.PagamentoComBoleto;
 import br.com.paulofranca.cursomc.model.PagamentoComCartao;
@@ -25,6 +26,7 @@ import br.com.paulofranca.cursomc.repositories.CidadeRepository;
 import br.com.paulofranca.cursomc.repositories.ClienteRepository;
 import br.com.paulofranca.cursomc.repositories.EnderecoRepository;
 import br.com.paulofranca.cursomc.repositories.EstadoRepository;
+import br.com.paulofranca.cursomc.repositories.ItemPedidoRepository;
 import br.com.paulofranca.cursomc.repositories.PagamentoRepository;
 import br.com.paulofranca.cursomc.repositories.PedidoRepository;
 import br.com.paulofranca.cursomc.repositories.ProdutoRepository;
@@ -59,6 +61,9 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -128,5 +133,18 @@ public class CursomcApplication implements CommandLineRunner {
 		this.pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		this.pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		System.out.println("----------- FIM --------------");
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		this.itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
