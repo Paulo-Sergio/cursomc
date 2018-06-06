@@ -93,7 +93,9 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 		
+		System.out.println("------- Adicionando Clientes e Endereços --------------");
 		this.clienteRepository.saveAll(Arrays.asList(cli1));
 		this.enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		System.out.println("----------- FIM --------------");
 	}
 }
